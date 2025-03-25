@@ -41,19 +41,19 @@ def check_excel_integrity(file_path):
         return f"손상됨 ({e})"
 
 # 폴더 내 모든 엑셀 파일 검사 후 결과를 파일로 저장
-def check_excels_in_folder(folder_path):
-    excel_files = [f for f in os.listdir(folder_path) if f.lower().endswith(('.xls', '.xlsx'))]
+def check_excels_in_folder(target_folder):
+    excel_files = [f for f in os.listdir(target_folder) if f.lower().endswith(('.xls', '.xlsx'))]
     total_files = len(excel_files)
     results = []
 
     # "OK" 폴더와 "corrupted" 폴더 경로 생성
-    ok_folder = os.path.join(folder_path, "OK")
-    corrupted_folder = os.path.join(folder_path, "corrupted")
+    ok_folder = os.path.join(target_folder, "OK")
+    corrupted_folder = os.path.join(target_folder, "corrupted")
     os.makedirs(ok_folder, exist_ok=True)
     os.makedirs(corrupted_folder, exist_ok=True)
 
     for idx, excel in enumerate(excel_files):
-        file_path = os.path.join(folder_path, excel)
+        file_path = os.path.join(target_folder, excel)
         status = check_excel_integrity(file_path)
         
         # 상태에 따라 파일을 복사
@@ -76,5 +76,5 @@ def check_excels_in_folder(folder_path):
     print(f"📄 검사 결과가 '{output_file}' 파일에 저장되었습니다.")
 
 # 검사할 폴더 경로 설정
-folder_path = "C:/TEST~~"
-check_excels_in_folder(folder_path)
+target_folder = "C:/TEST~~"
+check_excels_in_folder(target_folder)
